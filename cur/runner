@@ -4,3 +4,6 @@
 $app = require __DIR__.'/app/bootstrap.php';
 
 exit($app->run());
+
+
+// php runner -c save_event --name 'Name of event' --receiver 'ID reciever, while any' --text 'Memory text' --cron '* * * * *'php runner -c save_event --name 'Name of event' --receiver 'ID reciever, while any' --text 'Memory text' --cron '* * * * *'
