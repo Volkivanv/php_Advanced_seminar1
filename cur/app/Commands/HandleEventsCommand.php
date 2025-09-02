@@ -9,6 +9,7 @@ use App\Database\SQLite;
 use App\EventSender\EventSender;
 
 use App\Models\Event;
+use App\Telegram\TelegramApiImpl;
 
 //use App\Models\EventDto;
 
@@ -34,13 +35,13 @@ class HandleEventsCommand extends Command
 
         $events = $event->select();
 
-        $eventSender = new EventSender();
+        $eventSender = new EventSender(new TelegramApiImpl($this->app->env('TELEGRAM_TOKEN')));    
 
         foreach ($events as $event) {
 
             if ($this->shouldEventBeRan($event)) {
 
-                $eventSender->sendMessage($event->receiverId, $event->text);
+                $eventSender->sendMessage($event['receiver_id'], $event['text']);
 
             }
 
@@ -61,15 +62,19 @@ class HandleEventsCommand extends Command
 
         $currentWeekday = date("w");
 
-        return ($event['minute'] === $currentMinute &&
+        echo $currentMonth . " " . $currentDay . " " . $currentWeekday ." ". $currentMinute ." ". $currentHour ."\n" ;
+        echo $event['month'] . " " . $event['day'] . " " . $event['day_of_week']  ." ". $event['minute'] ." ". $event['hour'] ."" ;
 
-            $event['hour'] === $currentHour &&
+        return ($event['minute'] == $currentMinute &&
 
-            $event['day'] === $currentDay &&
+            $event['hour'] == $currentHour &&
 
-            $event['month'] === $currentMonth &&
+            $event['day'] == $currentDay &&
 
-            $event['weekDay'] === $currentWeekday);
+            $event['month'] == $currentMonth &&
+
+            $event['day_of_week'] == $currentWeekday);
+        // return true;
     }
 
 }
