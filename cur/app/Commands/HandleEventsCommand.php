@@ -62,8 +62,8 @@ class HandleEventsCommand extends Command
 
         $currentWeekday = date("w");
 
-        echo $currentMonth . " " . $currentDay . " " . $currentWeekday ." ". $currentMinute ." ". $currentHour ."\n" ;
-        echo $event['month'] . " " . $event['day'] . " " . $event['day_of_week']  ." ". $event['minute'] ." ". $event['hour'] ."" ;
+      //  echo $currentMonth . " " . $currentDay . " " . $currentWeekday ." ". $currentMinute ." ". $currentHour ."\n" ;
+      //  echo $event['month'] . " " . $event['day'] . " " . $event['day_of_week']  ." ". $event['minute'] ." ". $event['hour'] ."" ;
 
         return ($event['minute'] == $currentMinute &&
 
