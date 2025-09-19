@@ -5,6 +5,10 @@ namespace AppUnitTests;
 use App\Calculator;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @covers Calculator
+ */
+
 class CalculatorTest extends TestCase
 {
     /**

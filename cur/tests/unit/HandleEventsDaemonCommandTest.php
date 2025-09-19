@@ -2,6 +2,9 @@
 
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @covers EventDaemonCommand
+ */
 class HandleEventsDaemonCommandTest extends TestCase
 {
     /**

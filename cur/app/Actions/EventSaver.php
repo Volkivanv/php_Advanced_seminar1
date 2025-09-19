@@ -21,5 +21,6 @@ class EventSaver
             implode(', ', array_keys($params)),
             array_values($params)
         );
+        
     }
 }

@@ -2,7 +2,9 @@
 
 use PHPUnit\Framework\TestCase;
 
-
+/**
+ * @covers EventsCommand
+ */
 class HandleEventsCommandTest extends TestCase
 {
 
