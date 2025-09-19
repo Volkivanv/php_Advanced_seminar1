@@ -19,5 +19,10 @@ class TgMessagesCommand extends Command
         $tgApi = new TelegramApiImpl($this->app->env('TELEGRAM_TOKEN'));
         echo json_encode($tgApi->getMessage(0));
     }
+
+    protected function getTelegramApi(array $options = [])
+    {
+        return new TelegramApiImpl($this->app->env('TELEGRAM_TOKEN'));
+    }
     
 }
