@@ -9,6 +9,7 @@ use App\Database\SQLite;
 use App\EventSender\EventSender;
 
 use App\Models\Event;
+use App\Queue\RabbitMQ;
 use App\Telegram\TelegramApiImpl;
 
 //use App\Models\EventDto;
@@ -24,7 +25,6 @@ class HandleEventsCommand extends Command
     {
 
         $this->app = $app;
-
     }
 
     public function run(array $options = []): void
@@ -35,18 +35,22 @@ class HandleEventsCommand extends Command
 
         $events = $event->select();
 
-        $eventSender = new EventSender(new TelegramApiImpl($this->app->env('TELEGRAM_TOKEN')));    
+        $queue = new RabbitMQ('eventSender');
+
+        $eventSender = new EventSender(
+            new TelegramApiImpl($this->app->env('TELEGRAM_TOKEN')),
+            $queue
+        );
 
         foreach ($events as $event) {
 
-            if ($this->shouldEventBeRan($event)) {
+      //      if ($this->shouldEventBeRan($event)) {
+            
+            if (true) {
 
                 $eventSender->sendMessage($event['receiver_id'], $event['text']);
-
             }
-
         }
-
     }
 
     public function shouldEventBeRan(array $event): bool
@@ -62,8 +66,8 @@ class HandleEventsCommand extends Command
 
         $currentWeekday = date("w");
 
-      //  echo $currentMonth . " " . $currentDay . " " . $currentWeekday ." ". $currentMinute ." ". $currentHour ."\n" ;
-      //  echo $event['month'] . " " . $event['day'] . " " . $event['day_of_week']  ." ". $event['minute'] ." ". $event['hour'] ."" ;
+        //  echo $currentMonth . " " . $currentDay . " " . $currentWeekday ." ". $currentMinute ." ". $currentHour ."\n" ;
+        //  echo $event['month'] . " " . $event['day'] . " " . $event['day_of_week']  ." ". $event['minute'] ." ". $event['hour'] ."" ;
 
         return ($event['minute'] == $currentMinute &&
 
@@ -76,5 +80,4 @@ class HandleEventsCommand extends Command
             $event['day_of_week'] == $currentWeekday);
         // return true;
     }
-
 }

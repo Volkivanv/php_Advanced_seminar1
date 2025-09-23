@@ -66,3 +66,32 @@ OK
 
 ```
 
+## RabbitMQ
+
+```bash
+sudo apt install rabbitmq-server                 //installation
+
+sudo rabbitmq-plugins enable rabbitmq_management //plagin install
+
+rabbitmqadmin declare exchange name=my_fanout_exchange type=fanout // fanout creating
+
+rabbitmqadmin declare queue name=my_queue_1      //creating queue 1
+
+rabbitmqadmin declare queue name=my_queue_2      //creating queue 2
+
+rabbitmqadmin declare binding source=my_fanout_exchange destination=my_queue_1 destination_type=queue                           //binding queue1 and fanout
+
+rabbitmqadmin declare binding source=my_fanout_exchange destination=my_queue_2 destination_type=queue                           //binding queue1 and fanout
+
+rabbitmqadmin publish exchange=my_fanout_exchange routing_key="" payload="Hello, World"
+
+
+rabbitmqadmin get queue=my_queue_1 // get queue1
+
+php runner -c queue_manager 
+```
+
+![rabbitmqadmin get queue=eventSender](zsh.png)
+
+![php runner -c queue_manager](image.png)
+
